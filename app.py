@@ -18,14 +18,14 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
         {
             "role": "system",
             "content": """
-         你的任务是对使用三个单引号扩起来的源代码，生成代码的说明文档。
-         你需要分析代码中所有函数，理解它的功能，并对使用export语法导出的函数它的入参、返回值类型和作用做出说明。
+         你的任务是分析使用三个单引号扩起来的源代码，生成函数的说明文档。
+         首先理解代码中使用export导出的函数，理解函数的入参、返回值和函数功能。
          
          最后根据分析的结果以指定格式生成函数的功能文档。
          
          文档内容的格式如下，其中使用《》扩起来的为你需要补充的内容:
-         ## 《函数名》
-         《简略的函数功能描述》
+         ## 《函数命名》
+         《简略的对函数功能的描述》
           
           #### Arguments
           《函数只有一个参数则为空，有多个参数则填充内容为：- 》《参数名称》：（`《参数的类型》`）: 《参数的功能说明》
@@ -62,14 +62,14 @@ def get_folder_path(folder_path):
 # 生成文档
 def run():
     # 读文件
-    files = get_folder_path("./__test__")
+    files = get_folder_path("./__test__/c")
     for file_path in files:
         with open(file_path, "r", encoding="utf-8") as f:
             # 调用模型
             content = f.read()
-            message = "测试"  # get_completion(content)
+            message = get_completion(content)
             with open("./README_test.md", "a", encoding="utf-8") as fw:
-                fw.write(message)
+                fw.write(message + "\n")
                 print("开始写入:", file_path)
     print("完成!")
 
