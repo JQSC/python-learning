@@ -1,10 +1,14 @@
 import json
 import openai
+import os
 from collections import defaultdict
+from tool import get_completion_from_messages
 
+rootPath = os.path.dirname(__file__)
 # 商品和目录的数据文件
-products_file = "products.json"
-categories_file = "categories.json"
+products_file = os.path.join(rootPath, "products.json")
+categories_file = os.path.join(rootPath, "./categories.json")
+
 
 # 分隔符
 delimiter = "####"
@@ -94,19 +98,6 @@ step_6_system_message_content = f"""
 step_6_system_message = {"role": "system", "content": step_6_system_message_content}
 
 
-# 使用 ChatCompletion 接口
-def get_completion_from_messages(
-    messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500
-):
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-    return response.choices[0].message["content"]
-
-
 # 获取目录数据
 def get_categories():
     with open(categories_file, "r") as file:
@@ -184,7 +175,7 @@ def find_category_and_product_only(user_input, products_and_category):
     system_message = f"""
 您将获得客户服务查询。
 客户服务查询将使用{delimiter}字符作为分隔符。
-请仅输出一个可解析的Python列表，列表每一个元素是一个JSON对象，每个对象具有以下格式：
+请仅输出一个可解析的JSON格式对象，JSON每个对象具有以下格式：
 'category': <包括以下几个类别：Computers and Laptops、Smartphones and Accessories、Televisions and Home Theater Systems、Gaming Consoles and Accessories、Audio Equipment、Cameras and Camcorders>,
 以及
 'products': <必须是下面的允许产品列表中找到的产品列表>
@@ -195,49 +186,8 @@ def find_category_and_product_only(user_input, products_and_category):
 除了列表外，不要输出其他任何信息！
 
 允许的产品：
+{products_and_category}
 
-Computers and Laptops category:
-TechPro Ultrabook
-BlueWave Gaming Laptop
-PowerLite Convertible
-TechPro Desktop
-BlueWave Chromebook
-
-Smartphones and Accessories category:
-SmartX ProPhone
-MobiTech PowerCase
-SmartX MiniPhone
-MobiTech Wireless Charger
-SmartX EarBuds
-
-Televisions and Home Theater Systems category:
-CineView 4K TV
-SoundMax Home Theater
-CineView 8K TV
-SoundMax Soundbar
-CineView OLED TV
-
-Gaming Consoles and Accessories category:
-GameSphere X
-ProGamer Controller
-GameSphere Y
-ProGamer Racing Wheel
-GameSphere VR Headset
-
-Audio Equipment category:
-AudioPhonic Noise-Canceling Headphones
-WaveSound Bluetooth Speaker
-AudioPhonic True Wireless Earbuds
-WaveSound Soundbar
-AudioPhonic Turntable
-
-Cameras and Camcorders category:
-FotoSnap DSLR Camera
-ActionCam 4K
-FotoSnap Mirrorless Camera
-ZoomMaster Camcorder
-FotoSnap Instant Camera
-    
 只输出对象列表，不包含其他内容。
     """
     messages = [

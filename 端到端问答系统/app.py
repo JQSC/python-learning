@@ -7,7 +7,6 @@
 5. 对回答的内容再次检验
 """
 
-import openai
 import utils
 from tool import get_completion_from_messages
 
@@ -27,13 +26,13 @@ def process_user_message_ch(user_input, all_messages, debug=True):
     delimiter = "```"
     # 第一步: 使用 OpenAI 的 Moderation API 检查用户输入是否合规或者是一个注入的 Prompt
     # 由于没有该模型的vip权限，跳过此检查
-    response = {"results": ["success"]}  # openai.Moderation.create(input=user_input)
-    moderation_output = response["results"][0]
+    # response = {"results": ["success"]}  # openai.Moderation.create(input=user_input)
+    # moderation_output = response["results"][0]
 
-    # 经过 Moderation API 检查该输入不合规
-    if moderation_output["flagged"]:
-        print("第一步：输入被 Moderation 拒绝")
-        return "抱歉，您的请求不合规"
+    # # 经过 Moderation API 检查该输入不合规
+    # if moderation_output["flagged"]:
+    #     print("第一步：输入被 Moderation 拒绝")
+    #     return "抱歉，您的请求不合规"
 
     # 如果开启了 DEBUG 模式，打印实时进度
     if debug:
@@ -43,10 +42,10 @@ def process_user_message_ch(user_input, all_messages, debug=True):
     category_and_product_response = utils.find_category_and_product_only(
         user_input, utils.get_products_and_category()
     )
-    # print(category_and_product_response)
+    print(category_and_product_response)
     # 将抽取出来的字符串转化为列表
     category_and_product_list = utils.read_string_to_list(category_and_product_response)
-    # print(category_and_product_list)
+    print(category_and_product_list)
 
     if debug:
         print("第二步：抽取出商品列表")
@@ -121,4 +120,4 @@ def process_user_message_ch(user_input, all_messages, debug=True):
 
 user_input = "请告诉我关于 smartx pro phone 和 the fotosnap camera 的信息。另外，请告诉我关于你们的tvs的情况。"
 response, _ = process_user_message_ch(user_input, [])
-print(response)
+print(333, response)
