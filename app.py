@@ -7,9 +7,9 @@ _ = load_dotenv(find_dotenv())
 
 # 获取环境变量
 api_key = os.environ["OPENAI_API_KEY_LOCAL"]
+base_url = os.environ["OPENAI_BASE_URL"]
 
-
-client = OpenAI(api_key=api_key, base_url="https://api.aigc369.com/v1")
+client = OpenAI(api_key=api_key, base_url=base_url)
 
 
 # 调用openAI
