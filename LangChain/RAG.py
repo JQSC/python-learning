@@ -21,8 +21,7 @@ def main():
             )
         ),
     )
-    print(loader)
-    return
+
     docs = loader.load()
 
     # 2. 拆分为更小的块
