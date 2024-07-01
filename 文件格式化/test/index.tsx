@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
-import "./index.less";
+import styles from "./index.module.less";
 
 interface IProps {}
 
 const Test: React.FC<IProps> = () => {
-  return <div className="test-dxd-123"></div>;
+  return <div className={styles.testDxd123}></div>;
 };
 
 export default Test;
