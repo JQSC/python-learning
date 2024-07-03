@@ -19,3 +19,5 @@ build/
 .env
 
 examples/assistant-flask/uploads
+
+__data__
