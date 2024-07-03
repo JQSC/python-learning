@@ -1,0 +1,11 @@
+{
+    "name": "Alice",
+    "age": 30,
+    "is_student": false,
+    "scores": [
+        85.5,
+        90.0,
+        88.5
+    ],
+    "address": null
+}
