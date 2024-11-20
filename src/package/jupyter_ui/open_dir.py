@@ -46,11 +46,11 @@ button_file = widgets.Button(
     tooltip="选择的文件将被解析",
 )
 
-text = widgets.Text(
+dir_text = widgets.Text(
     value="",
     placeholder="解析路径",
     # description='选中的目录地址:',
-    disabled=True,
+    disabled=False,
 )
 
 
@@ -60,15 +60,15 @@ def btn_disable():
 
 
 def dir_btn_click(b):
-    btn_disable()
-    text.value = select_directory()
-    btn_disable()
+    # btn_disable()
+    dir_text.value = select_directory()
+    # btn_disable()
 
 
 def file_btn_click(b):
-    btn_disable()
-    text.value = select_file()
-    btn_disable()
+    # btn_disable()
+    dir_text.value = select_file()
+    # btn_disable()
 
 
 button_dir.on_click(dir_btn_click)
@@ -85,6 +85,6 @@ button_file.on_click(file_btn_click)
 
 def open_dir_ui():
     return widgets.GridBox(
-        [button_dir, button_file, text],
+        [button_dir, button_file, dir_text],
         layout=widgets.Layout(grid_template_columns="repeat(3, 160px)"),
     )
