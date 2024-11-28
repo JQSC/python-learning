@@ -1,8 +1,11 @@
 /**
  * 企业logo
  */
+import { getSafetyAgreement } from "@common/js/safetyAgreement";
+import styles from "./index.module.less"; // style
+import { utils } from "./utils";
+import { Form, FormInstance, Checkbox } from "antd";
 import React, { CSSProperties } from "react";
-import styles from "./index.module.less";
 
 /**
  * 企业Logo组件的属性接口
